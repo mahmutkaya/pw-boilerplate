@@ -1,0 +1,79 @@
+{
+  "channels-retail-api-service": {
+    "baseurl": "https://api.acc.channels.fibrbank.com"
+  },
+  "channels-retail-web-app": {
+    "baseurl": "https://savings.acc.fibr.com",
+    "automationUserPool": "e0d44287f2fbc442bfbb1cccd51ab826",
+    "onboardingProductId": "a0d7Y00000G3QCWQA3"
+  },
+  "channels-fibr-website": {
+    "baseurl": "https://acc.fibr.com"
+  },
+  "customer-salesforce-service": {
+    "baseurl": "https://fibrbank--acc.my.salesforce.com/"
+  },
+  "product-account-service": {
+    "baseurl": "https://api.acc.product.fibrbank.com/account-service-v1-acc",
+    "mambu": "https://fibrbank.sandbox.mambu.com/api",
+    "authenticate": "https://auth-irl.prd.fibrbank.com/oauth2/token",
+    "stateMachines": {
+      "outgoingProcessingWorkflow": "arn:aws:states:eu-west-1:525690187284:stateMachine:OutgoingProcessingWorkflow",
+      "executionOutgoingProcessingWorkflow": "arn:aws:states:eu-west-1:525690187284:execution:OutgoingProcessingWorkflow"
+    },
+    "productRole": {
+      "roleArn": "arn:aws:iam::525690187284:role/deploy-services",
+      "roleSessionName": "TestAutomation"
+    },
+    "s3BucketFromOnPrem": "atbank-acc-product-equation-adapter-from-onprem"
+  },
+  "payments-payment-service": {
+    "baseurl": "https://opwmaqvk88.execute-api.eu-west-1.amazonaws.com/acc",
+    "stateMachines": {
+      "outboundProcessingWorkflow": "arn:aws:states:eu-west-1:470597467234:stateMachine:OutboundProcessingWorkflow",
+      "executionOutboundProcessingArn": "arn:aws:states:eu-west-1:470597467234:execution:OutboundProcessingWorkflow"
+    },
+    "paymentRole": {
+      "roleArn": "arn:aws:iam::470597467234:role/deploy-services",
+      "roleSessionName": "TestAutomation"
+    },
+    "incomingPaymentQueueUrl": "https://sqs.eu-west-1.amazonaws.com/470597467234/payment-service-form3-incoming"
+  },
+  "product-payment-gateway": {
+    "paymentsQueueUrl": "https://sqs.eu-west-1.amazonaws.com/525690187284/payment-gateway-v1-payments.fifo",
+    "mambu": "https://fibrbank.sandbox.mambu.com/api",
+    "authenticate": "https://auth-irl.prd.fibrbank.com/oauth2/token",
+    "productRole": {
+      "roleArn": "arn:aws:iam::525690187284:role/deploy-services",
+      "roleSessionName": "TestAutomation"
+    },
+    "stateMachines": {
+      "executionIncomingTransactionWorkflow": "arn:aws:states:eu-west-1:525690187284:execution:IncomingTransactionWorkflow"
+    },
+    "createPaymentLambda": "payment-gateway-v1-acc-create-payment-acc",
+    "testsUpdateLoanSecretLambda": "payment-gateway-v1-acc-tests-update-loan-secrets-acc",
+    "hardcodedBeneficiaryIban": "NL39ATBA1000000011",
+    "hardcodedNominatedIban": "NL64ABNA0415781663",
+    "hardcodedBeneficiaryId": "NL-TL-058414"
+  },
+  "customer-integration-service": {
+    "salesforceBaseurl": "https://fibrbank--acc.my.salesforce.com/",
+    "baseurl": "https://api.acc.customer.fibrbank.com/customer-service-v1-acc/v1",
+    "authenticate": "https://auth-irl.prd.fibrbank.com/oauth2/token",
+    "testCustomerId": "0017Y00001WCGZeQAP",
+    "customerRole": {
+      "roleArn": "arn:aws:iam::669396357618:role/deploy-services",
+      "roleSessionName": "TestAutomation"
+    },
+    "fileUploadS3Bucket": "fibr-acc-customer-salesforce-doc-storage",
+    "antivirusQuarantineS3Bucket": "fibr-acc-customer-salesforce-antivirus-quarantine"
+  },
+  "qa-automation-skynet": {
+    "baseurl": "https://jsonplaceholder.typicode.com",
+    "logging": {
+      "hideSecrets": true,
+      "level": "INFO",
+      "enabled": true
+    }
+  }
+}

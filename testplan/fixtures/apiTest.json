@@ -1,0 +1,9 @@
+{
+  "data": {
+    "grant_type": "client_credentials"
+  },
+  "failOnStatusCode": false,
+  "method": "POST",
+  "url": "https://auth-irl.prd.fibrbank.com/oauth2/token",
+  "timestamp": "{{generate.timestamp}}"
+}

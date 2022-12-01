@@ -1,0 +1,42 @@
+name: 'pull request > main'
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone main repository
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Build Skynet
+        run: >
+          docker build -f playwright.Dockerfile -t skynet .
+
+      - name: Test skynet development
+        env:
+          PROJECT: qa-automation-skynet
+        run: >
+          docker run
+          -e AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
+          -e AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
+          -e AWS_ROLE_EXTERNAL_ID=${{secrets.AWS_ROLE_EXTERNAL_ID}}
+          -e DD_GIT_REPOSITORY_URL=https://github.com/fibrbank/$PROJECT.git
+          -e DD_GIT_BRANCH=${{inputs.branch}}
+          -e DD_GIT_COMMIT_SHA=$GITHUB_SHA
+          -e ENV_NAME=development
+          -e PROJECT=$PROJECT
+          -e TF_VAR_DD_API_KEY=${{secrets.TF_VAR_DD_API_KEY}}
+          skynet
+          sh ./runTest.sh

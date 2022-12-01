@@ -1,0 +1,9 @@
+{
+  "name": "SkyDuck",
+  "service": "skyduck",
+  "workspaceFolder": "/opt/skynet",
+  "dockerComposeFile": "./docker-compose.yml",
+  "settings": {},
+  "extensions": ["dbaeumer.vscode-eslint", "alexkrechik.cucumberautocomplete"]
+  // "remoteUser": "skyduck"
+}

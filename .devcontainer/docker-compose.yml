@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  skyduck:
+    build:
+      context: ../.
+      dockerfile: playwright.Dockerfile
+    shm_size: 2G
+
+    environment:
+      - PROJECT=qa-automation-skynet
+      - ENV_NAME=development
+    volumes:
+      - /var/run/docker.sock:/var/run/docker-host.sock
+      - ${HOME}/.aws/credentials:/root/.aws/credentials
+      - ${PWD}/.vscode:/opt/skynet/.vscode
+      - ${PWD}/config/environment-development.json:/opt/skynet/environment.json
+
+      ## MOUNTING LOCALLY: "TESTPLANS REPOSITORY": 
+      # INFO: Be sure that before running container, you have pulled lates main branch
+      # - ${PWD}/../qa-automation-testplans/testplans:/opt/skynet/src/projects
+
+      ## MOUNTING LOCCALY: "LOCAL REPOSITORIES": 
+      # Uncomment this if you want to mount changes in your local repository
+      # INFO: Be sure that before running container, you are on the correct branch which you want to use
+      - ${PWD}/testplan/:/opt/skynet/src/projects/qa-automation-skynet
+      - ${PWD}/../channels-retail-api-service/testplan/cypress:/opt/skynet/src/projects/channels-retail-api-service
+      - ${PWD}/../channels-retail-web-app/testplan/cypress:/opt/skynet/src/projects/channels-retail-web-app
+      - ${PWD}/../customer-salesforce-service/testplan/cypress:/opt/skynet/src/projects/customer-salesforce-service
+      - ${PWD}/../customer-integration-service/testplan/cypress:/opt/skynet/src/projects/customer-integration-service
+      - ${PWD}/../product-account-service/testplan/cypress:/opt/skynet/src/projects/product-account-service
+      - ${PWD}/../payments-payment-service/testplan/cypress:/opt/skynet/src/projects/payments-payment-service
+      - ${PWD}/../product-payment-gateway/testplan/cypress:/opt/skynet/src/projects/product-payment-gateway
+      ## MOUNTING PACKAGES FROM SKYNET
+      # Uncomment this if you need to install new packages, or changes something in cypress.json
+      # - ${PWD}/package.json:/opt/skynet/package.json
+      # - ${PWD}/package-lock.json:/opt/skynet/package-lock.json
+
+
+    command: sleep infinity

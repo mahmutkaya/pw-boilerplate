@@ -1,0 +1,6 @@
+{
+  "userData": {
+    "name": "{{ username }}",
+    "job": "{{ jobTitle }}"
+  }
+}
